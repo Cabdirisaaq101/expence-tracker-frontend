@@ -1,0 +1,35 @@
+body.light {
+  background: #f9f9f9;
+  color: #222;
+}
+
+body.dark {
+  background: #121212;
+  color: #eee;
+}
+
+button {
+  cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #ccc;
+  background: inherit;
+}
+
+.nav-left a,
+.nav-right a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}

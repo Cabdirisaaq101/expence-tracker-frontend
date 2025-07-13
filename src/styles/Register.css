@@ -1,0 +1,111 @@
+/* src/styles/Register.css */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-title {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  gap: 1.2rem;
+}
+
+.auth-form input {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.auth-form input::placeholder {
+  color: #95a5a6;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.auth-form button {
+  padding: 0.9rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.auth-form button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.auth-error {
+  color: #e74c3c;
+  margin: 1rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  background-color: #fdeded;
+  border-radius: 6px;
+}
+
+.auth-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+}
+
+.auth-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.auth-link a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1.5rem;
+  }
+  
+  .auth-form {
+    padding: 1.8rem;
+  }
+  
+  .auth-title {
+    font-size: 1.8rem;
+  }
+}
