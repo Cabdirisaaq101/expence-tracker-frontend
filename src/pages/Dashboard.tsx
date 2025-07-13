@@ -25,16 +25,6 @@ interface Expense {
   date: string;
 }
 
-interface ChartData {
-  name: string;
-  value: number;
-}
-
-interface MonthlyData {
-  month: string;
-  amount: number;
-}
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#9C27B0", "#E91E63"];
 
 export default function Dashboard() {
@@ -116,8 +106,9 @@ export default function Dashboard() {
     }
   };
 
-  const categoryData = expenses.reduce((acc: ChartData[], curr) => {
-    const existing = acc.find(x => x.name === curr.category);
+  // Process data for charts
+  const categoryData = expenses.reduce((acc: any, curr) => {
+    const existing = acc.find((x: any) => x.name === curr.category);
     if (existing) {
       existing.value += curr.amount;
     } else {
@@ -126,21 +117,19 @@ export default function Dashboard() {
     return acc;
   }, []);
 
-  const monthlyData = expenses.reduce((acc: MonthlyData[], curr) => {
+  const monthlyData = expenses.reduce((acc: any, curr) => {
     const month = new Date(curr.date).toLocaleString("default", { 
       month: "short", 
       year: "numeric" 
     });
-    const existing = acc.find(x => x.month === month);
+    const existing = acc.find((x: any) => x.month === month);
     if (existing) {
       existing.amount += curr.amount;
     } else {
       acc.push({ month, amount: curr.amount });
     }
     return acc;
-  }, []).sort((a: MonthlyData, b: MonthlyData) => 
-    new Date(a.month).getTime() - new Date(b.month).getTime()
-  );
+  }, []).sort((a, b) => new Date(a.month) - new Date(b.month));
 
   const totalSpent = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
@@ -249,9 +238,9 @@ export default function Dashboard() {
                     cx="50%" 
                     cy="50%" 
                     outerRadius={80} 
-                    label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
-                   {categoryData.map((_: ChartData, index: number) => (
+                    {categoryData.map((_, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
