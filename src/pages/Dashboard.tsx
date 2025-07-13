@@ -251,7 +251,7 @@ export default function Dashboard() {
                     outerRadius={80} 
                     label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
                   >
-                    {categoryData.map((entry: ChartData, index: number) => (
+                   {categoryData.map((_: ChartData, index: number) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
