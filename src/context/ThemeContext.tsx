@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 
 interface ThemeContextType {
   theme: "light" | "dark";
