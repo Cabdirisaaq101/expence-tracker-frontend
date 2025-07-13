@@ -116,7 +116,6 @@ export default function Dashboard() {
     }
   };
 
-  // Process data for charts with proper typing
   const categoryData = expenses.reduce((acc: ChartData[], curr) => {
     const existing = acc.find(x => x.name === curr.category);
     if (existing) {
@@ -165,7 +164,161 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* ... rest of your component remains the same ... */}
+      <div className="dashboard-content">
+        <section className="form-section">
+          <h3>{editingId ? "Edit Expense" : "Add New Expense"}</h3>
+          <form onSubmit={handleSubmit} className="expense-form">
+            <div className="form-group">
+              <label>Title</label>
+              <input 
+                name="title" 
+                value={form.title} 
+                onChange={handleChange} 
+                placeholder="Dinner, Rent, etc." 
+                required 
+              />
+            </div>
+            <div className="form-group">
+              <label>Amount ($)</label>
+              <input 
+                name="amount" 
+                type="number" 
+                value={form.amount} 
+                onChange={handleChange} 
+                placeholder="0.00" 
+                min="0.01" 
+                step="0.01" 
+                required 
+              />
+            </div>
+            <div className="form-group">
+              <label>Category</label>
+              <input 
+                name="category" 
+                value={form.category} 
+                onChange={handleChange} 
+                placeholder="Food, Transportation, etc." 
+                required 
+              />
+            </div>
+            <div className="form-group">
+              <label>Date</label>
+              <input 
+                name="date" 
+                type="date" 
+                value={form.date} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+            <div className="form-actions">
+              <button type="submit" className="primary-btn">
+                {editingId ? "Update Expense" : "Add Expense"}
+              </button>
+              {editingId && (
+                <button 
+                  type="button" 
+                  className="secondary-btn"
+                  onClick={() => {
+                    setEditingId(null);
+                    setForm({ 
+                      title: "", 
+                      amount: "", 
+                      category: "", 
+                      date: new Date().toISOString().split('T')[0] 
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
+        </section>
+
+        <section className="charts-section">
+          <div className="chart-container">
+            <h3>Spending by Category</h3>
+            <div className="chart-wrapper">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie 
+                    data={categoryData} 
+                    dataKey="value" 
+                    nameKey="name" 
+                    cx="50%" 
+                    cy="50%" 
+                    outerRadius={80} 
+                    label={({ name, percent }) => `${name} ${percent ? (percent * 100).toFixed(0) : 0}%`}
+                  >
+                    {categoryData.map((entry: ChartData, index: number) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => [`$${value}`, "Amount"]} />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="chart-container">
+            <h3>Monthly Spending</h3>
+            <div className="chart-wrapper">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={monthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => [`$${value}`, "Total"]} />
+                  <Legend />
+                  <Bar dataKey="amount" name="Monthly Total" fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </section>
+
+        <section className="transactions-section">
+          <h3>Recent Transactions</h3>
+          {isLoading ? (
+            <p>Loading transactions...</p>
+          ) : expenses.length === 0 ? (
+            <p>No transactions found. Add your first expense!</p>
+          ) : (
+            <div className="transactions-list">
+              {expenses.slice(0, 5).map((exp) => (
+                <div key={exp.id} className="transaction-item">
+                  <div className="transaction-info">
+                    <span className="transaction-category">{exp.category}</span>
+                    <span className="transaction-title">{exp.title}</span>
+                    <span className="transaction-date">
+                      {new Date(exp.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="transaction-amount">
+                    ${exp.amount.toFixed(2)}
+                  </div>
+                  <div className="transaction-actions">
+                    <button 
+                      onClick={() => handleEdit(exp)}
+                      className="edit-btn"
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(exp.id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
