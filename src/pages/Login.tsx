@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useContext, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import "/src/styles/Login.css?raw";
+import "../styles/Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,11 +10,11 @@ export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/api/auth/login", formData);
@@ -50,7 +50,10 @@ export default function Login() {
         {error && <p className="auth-error">{error}</p>}
       </form>
       <p className="auth-link">
-        Don't have an account? <Link to="/register" className="auth-link-text">Register here</Link>
+        Don't have an account?{" "}
+        <Link to="/register" className="auth-link-text">
+          Register here
+        </Link>
       </p>
     </div>
   );
