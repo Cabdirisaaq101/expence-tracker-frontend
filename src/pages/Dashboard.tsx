@@ -15,7 +15,8 @@ import {
   Legend,
   CartesianGrid
 } from "recharts";
-import "../styles/dashboard.css";
+import "../styles/Dashboard.css";
+
 
 interface Expense {
   id: string;
